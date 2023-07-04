@@ -1,0 +1,147 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Users API",
+    "description": "This API supports the creation and retrieval of a User Object.",
+    "contact": {
+      "email": "chisama.musonda@aizatron.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/echovue/Users/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    }
+  ],
+  "tags": [
+    {
+      "name": "admins",
+      "description": "Secured Admin-only calls"
+    },
+    {
+      "name": "developers",
+      "description": "Operations available to regular developers"
+    }
+  ],
+  "paths": {
+    "/User": {
+      "get": {
+        "tags": [
+          "developers"
+        ],
+        "summary": "Find User by ID",
+        "description": "Returns the matching User object",
+        "operationId": "findUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of the User to return",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User object matching criteria",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "developers"
+        ],
+        "summary": "Adds a User with form data",
+        "description": "Adds an User object to the system",
+        "operationId": "addUser",
+        "requestBody": {
+          "description": "User to add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User object created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid input, object invalid"
+          },
+          "409": {
+            "description": "an existing User already exists"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "required": [
+          "birthday",
+          "surname",
+          "gender",
+          "name",
+          "id_number"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John"
+          },
+          "surname": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "gender": {
+            "type": "string",
+            "example": "Male"
+          },
+          "id_number": {
+            "type": "string",
+            "example": "7812221234565"
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date",
+            "example": "1978-12-22"
+          }
+        }
+      }
+    }
+  }
+}
